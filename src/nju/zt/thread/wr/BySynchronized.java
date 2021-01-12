@@ -5,7 +5,7 @@ package nju.zt.thread.wr;
  * @Description //读者写者问题，写者优先解法
  * @Description ①：写者与写者互斥，不能同时写
  * @Description ②：写者和读者互斥，写（读）的过程中不能读（写）
- * @Description ③：读者直接不互斥，可以多个线程同时读
+ * @Description ③：读者之间不互斥，可以多个线程同时读
  * @Description ④：写者优先，写者到来时，要求尽快写完
  *                         也就是已经在读的读者读完要把执行权让给写者
  *                         而还没有开始写的读者直接wait，等写者写完再重新请求执行权
