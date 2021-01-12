@@ -3,6 +3,12 @@ package nju.zt.thread.wr;
 /**
  * @ClassName BySynchronized
  * @Description //读者写者问题，写者优先解法
+ * @Description ①：写者与写者互斥，不能同时写
+ * @Description ②：写者和读者互斥，写（读）的过程中不能读（写）
+ * @Description ③：读者直接不互斥，可以多个线程同时读
+ * @Description ④：写者优先，写者到来时，要求尽快写完
+ *                         也就是已经在读的读者读完要把执行权让给写者
+ *                         而还没有开始写的读者直接wait，等写者写完再重新请求执行权
  * @Author zt
  * @Date 2021/1/12 16:56
  * @Version 1.0
@@ -20,7 +26,7 @@ public class BySynchronized {
         private Object fileMutex = new Object(); //用于文件互斥，也就是写写互斥和读写互斥
 
         public void write() {
-            //写者一进来就hasWriter =true，读者就能检测到
+            //写者一进来就hasWriter = true，读者就能检测到,于是还没有开始读的但已经进入的线程就wait
             synchronized (writeMutex) {
                 System.out.println(Thread.currentThread().getName() + " 进来"+
                         ",现有写者" + writerCount + "个" +
@@ -28,7 +34,6 @@ public class BySynchronized {
                 hasWriter = true;
                 writerCount++;
             }
-
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
@@ -60,14 +65,12 @@ public class BySynchronized {
                 fileMutex.notifyAll();
             }
             synchronized (writeMutex) {
-                /**
-                 * 写者全部写完才能让读者读
-                 */
                 writerCount--;
                 System.out.println(Thread.currentThread().getName() + " 写完 " +
                         ",现有" + writerCount + "个写者要写" +"现在有"
                         + c + "个读者在等待");
                 if (writerCount == 0) {
+                    //写者全部写完才能让读者读
                     hasWriter = false;
                     System.out.println("所有写者写完");
                 }
@@ -75,14 +78,13 @@ public class BySynchronized {
         }
 
         public void read() {
-            //只要有写者正在写（或者想写)，读者就不能开始读, 若读者正在读时，出现了写者，那读者读完就要让出处理器
+            //只要有写者正在写（或者想写)，读者就不能开始读, 若读者正在读时，出现了写者，那读者读完就要退出
             synchronized (fileMutex) {
-                c ++;
+                c++;
                 System.out.println(Thread.currentThread().getName() + " 进来" +
                         ",现有写者" + writerCount + "个" +
                         ",现有"+ c + "个读者在等待");
                 while (true) {
-
                     if (hasWriter) {
                         try {
                             System.out.println(Thread.currentThread().getName() + "等待写者写完" +
@@ -93,14 +95,13 @@ public class BySynchronized {
                             e.printStackTrace();
                         }
                     } else {
-                        //没有writer了，就可以开始读，isReading = true 使得写者在不能写
+                        //没有writer了，就可以开始读，isReading = true 使得写者不能写
                         synchronized (writeMutex) {
                             isReading = true;
                             readerCount++;
                             System.out.println("没有写者，或写者写完，" + Thread.currentThread().getName() + "开始读"+
                                     ",现有写者" + writerCount + "个" +
                                     ",现有"+ readerCount + "个读者正在读");
-
                             fileMutex.notifyAll();
                             break;
                         }
@@ -111,30 +112,30 @@ public class BySynchronized {
              * 开始读
              * 此时isreading = true， haswriter = flase
              * 此线程读文件的过程中，若另一个写者来
-             * ① 另一个读者已经 经过haswriter判断 则和此线程同时读，读完后两个读者都退出
-             * ② 另一个读者还在haswriter，那么将不会进入读文件过程
+             * ① 另一个读者已经经过haswriter判断，则和此线程同时读，读完后两个读者都退出
+             * ② 另一个读者还在haswriter，那么将直接wait
              **/
             System.out.println(Thread.currentThread().getName() + " 正在读文件"+
                     ",现有写者" + writerCount + "个" +
                     ",现有"+ readerCount + "个正在读");
 
             synchronized (readMutex) {
-                /**
-                 * 所有正在读文件的读者都读完了，就停止读
-                 * 同时前面已经限制了还没有开始读的读者不进入读
-                 * 于是此时无读者，写者能够开始写
-                 **/
                 readerCount--;
                 c--;
                 System.out.println(Thread.currentThread().getName() + " 读完"+
                         ",现有写者" + writerCount + "个" +
                         ",现有"+ readerCount + "个读者需要读");
+
+                /**
+                 * 所有正在读文件的读者都读完了，就停止读
+                 * 同时前面已经限制了还没有开始读的读者不进入读
+                 * 于是此时无读者，写者能够开始写
+                 **/
                 if (readerCount == 0) {
                     isReading = false;
                     System.out.println("所有读者读完");
                 }
             }
-
         }
         static class MyWriter implements Runnable {
             private MyFile file;
