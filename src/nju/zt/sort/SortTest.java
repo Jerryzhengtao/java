@@ -1,5 +1,6 @@
 package nju.zt.sort;
 
+
 /**
  * @ClassName SortTest
  * @Description //TODO
@@ -9,11 +10,18 @@ package nju.zt.sort;
  **/
 public class SortTest {
     public static void main(String[] args) {
-        int [] testArray = new int[]{12,2,3,531,34,12,2,1,-2,0,-3,4,3,6,9};
-        BubbleSort bubbleSort = new BubbleSort(testArray);
-        bubbleSort.sort();
-        for(int i : testArray) {
-            System.out.print(i+" ");
+        Integer[] testArray = new Integer[]{1, 213, 12, 5234, 652, 3, 2, 31, 232, 57, 32, 23, 0, 2, 3, -4, 5};
+        int[] testArray1 = new int[]{1, 213, 12, 5234, 652, 3, 2, 31, 232, 57, 32, 23, 0, 2, 3, -4, 5};
+        System.out.println("-4 0 1 2 2 3 3 5 12 23 31 32 57 213 232 652 5234 ");
+        //bubbleSort(testArray);
+        //selectionSort(testArray);
+        //insertionSort(testArray);
+        //shellSort(testArray);
+        Sort.mergeSort(testArray);
+        for (Integer i : testArray) {
+            System.out.print(i + " ");
         }
     }
+
+
 }

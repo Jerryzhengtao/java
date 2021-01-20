@@ -1,11 +1,16 @@
 
 public class HelloGoodbye {
-    public static void main(String[] args) {
-        try {
-            System.out.println("Hello world");
-            System.exit(0);
-        } finally {
-            System.out.println("Goodbye world");
-        }
+    static public final int i = 2;
+    public int j;
+    static {
+        System.out.println("static");
+    }
+
+    public static void out() {
+        System.out.println("static method");
+    }
+
+    public HelloGoodbye() {
+        System.out.println("init");
     }
 }
