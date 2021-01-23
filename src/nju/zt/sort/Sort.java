@@ -1,5 +1,6 @@
 package nju.zt.sort;
 
+
 /**
  * @ClassName Sort
  * @Description //将多个排序类整合到Sort类中
@@ -22,9 +23,11 @@ public class Sort {
         for (int i = 0; i < length - 1; i++) {
             for (int j = 0; j < length - 1 - i; j++) {
                 if (arr[j].compareTo(arr[j + 1]) > 0) {
-                    T temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
+                    swap(arr, j, j + 1);
+                    /** T temp = arr[j];
+                     arr[j] = arr[j + 1];
+                     arr[j + 1] = temp;
+                     **/
                 }
             }
         }
@@ -47,9 +50,10 @@ public class Sort {
                     minIndex = j; //找到最小的数的索引
                 }
             }
-            T temp = arr[minIndex];
-            arr[minIndex] = arr[i];
-            arr[i] = temp;
+            swap(arr, i, minIndex);
+            /** T temp = arr[minIndex];
+             arr[minIndex] = arr[i];
+             arr[i] = temp;**/
         }
     }
 
@@ -62,7 +66,7 @@ public class Sort {
      * @Date 2021/1/20 19:36
      * @Param [arr]
      **/
-    public static <T extends Comparable<?super T>> void insertionSort(T[] arr) {
+    public static <T extends Comparable<? super T>> void insertionSort(T[] arr) {
         for (int i = 0; i < arr.length; i++) {
             T current = arr[i];
             int index = i;
@@ -124,8 +128,7 @@ public class Sort {
     }
 
     private static <T extends Comparable<? super T>> void merge(T[] arr, T[] temp,
-                                                        int leftPos, int rightPos, int rightEnd) {
-
+                                                                int leftPos, int rightPos, int rightEnd) {
         int leftEnd = rightPos - 1;
         int tmpPos = leftPos;
         int numElements = rightEnd - leftPos + 1;
@@ -149,6 +152,48 @@ public class Sort {
         for (int i = 0; i < numElements; i++, rightEnd--) {
             arr[rightEnd] = temp[rightEnd];
         }
+    }
+/**
+ * @MethodName quickSort
+ * @Description //快速排序
+ * @Date 2021/1/23 22:10
+ * @Param [arr]
+ * @return void
+ **/
+    public static <T extends Comparable<? super T>> void quickSort(T[] arr) {
+        if (arr.length > 1) {
+            quickSort(arr, 0, arr.length - 1);
+        }
+    }
+
+    private static <T extends Comparable<? super T>> void quickSort(T[] arr, int left, int right) {
+        if (left < right) {
+            int pivotIndex = partion(arr, left, right);
+            quickSort(arr, left, pivotIndex - 1);
+            quickSort(arr, pivotIndex + 1, right);
+        }
+    }
+
+    private static <T extends Comparable<? super T>> int partion(T[] arr, int left, int right) {
+        T pivot = arr[left];
+        while (left < right) {
+            while (left < right && arr[right].compareTo(pivot) >= 0) {
+                right--;
+            }
+            arr[left] = arr[right];
+            while (left < right && arr[left].compareTo(pivot) <= 0) {
+                left++;
+            }
+            arr[right] = arr[left];
+        }
+        arr[left] = pivot;
+        return left;
+    }
+
+    private static <T> void swap(T[] arr, int aIndex, int bIndex) {
+        T tmp = arr[aIndex];
+        arr[aIndex] = arr[bIndex];
+        arr[bIndex] = tmp;
     }
 
 }
