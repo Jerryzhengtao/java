@@ -17,7 +17,7 @@ public class Sort {
      * @Date 2021/1/20 19:22
      * @Param [arr]
      **/
-    public static <T extends Comparable<T>> void bubbleSort(T[] arr) {
+    public static <T extends Comparable<? super T>> void bubbleSort(T[] arr) {
         int length = arr.length;
         for (int i = 0; i < length - 1; i++) {
             for (int j = 0; j < length - 1 - i; j++) {
@@ -39,7 +39,7 @@ public class Sort {
      * @Date 2021/1/20 19:28
      * @Param [arr]
      **/
-    public static <T extends Comparable<T>> void selectionSort(T[] arr) {
+    public static <T extends Comparable<? super T>> void selectionSort(T[] arr) {
         for (int i = 0; i < arr.length; i++) {
             int minIndex = i;
             for (int j = i; j < arr.length; j++) {
@@ -62,7 +62,7 @@ public class Sort {
      * @Date 2021/1/20 19:36
      * @Param [arr]
      **/
-    public static <T extends Comparable<T>> void insertionSort(T[] arr) {
+    public static <T extends Comparable<?super T>> void insertionSort(T[] arr) {
         for (int i = 0; i < arr.length; i++) {
             T current = arr[i];
             int index = i;
@@ -78,12 +78,12 @@ public class Sort {
      * @return void
      * @MethodName shellSort
      * @Description //希尔排序
-     * 时间复杂度：
+     * 时间复杂度：o(n^2) 亚二次
      * 空间复杂度O(1) ，不稳定排序
      * @Date 2021/1/20 19:59
      * @Param [arr]
      **/
-    public static <T extends Comparable<T>> void shellSort(T[] arr) {
+    public static <T extends Comparable<? super T>> void shellSort(T[] arr) {
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {
             for (int j = gap; j < arr.length; j++) {
                 T current = arr[j];
@@ -100,20 +100,19 @@ public class Sort {
     /**
      * @return void
      * @MethodName mergeSort
-     * @Description //冒泡排序
-     * 时间复杂度：最好O(n),最坏O(n^2),平均O(n^2)
-     * 空间复杂度O(1) ，稳定排序
+     * @Description //归并排序
+     * 时间复杂度：最好O(nlogn),最坏O(nlogn),平均O(nlogn)
+     * 空间复杂度O(n) ，稳定排序
      * @Date 2021/1/20 20:03
      * @Param [arr]
      **/
-    public static <T extends Comparable<T>> void mergeSort(T[] arr) {
+    public static <T extends Comparable<? super T>> void mergeSort(T[] arr) {
         //创建与原数组相同长度的数组
         T[] temp = (T[]) new Comparable[arr.length];
         mergeSort(arr, temp, 0, arr.length - 1);
     }
 
-    private static <T extends Comparable<T>> void mergeSort(T[] arr, T[] temp, int left, int right) {
-
+    private static <T extends Comparable<? super T>> void mergeSort(T[] arr, T[] temp, int left, int right) {
         if (left < right) {
             //从中间将数组分成两半
             int mid = (left + right) >> 1;
@@ -124,7 +123,7 @@ public class Sort {
         }
     }
 
-    private static <T extends Comparable<T>> void merge(T[] arr, T[] temp,
+    private static <T extends Comparable<? super T>> void merge(T[] arr, T[] temp,
                                                         int leftPos, int rightPos, int rightEnd) {
 
         int leftEnd = rightPos - 1;

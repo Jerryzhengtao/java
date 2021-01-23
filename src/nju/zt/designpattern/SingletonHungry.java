@@ -1,5 +1,4 @@
 package nju.zt.designpattern;
-
 /**
  * @ClassName SignletonHungry
  * @Description //单例模式饿汉式

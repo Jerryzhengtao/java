@@ -6,26 +6,30 @@ package nju.zt.designpattern;
  * @Date 2021/1/23 13:27
  * @Version 1.0
  **/
-public class SingletonLazy{
+public class SingletonLazy {
     private static SingletonLazy instance = null;
-    private SingletonLazy(){}
-    public static SingletonLazy getInstance(){
-        if(instance==null)
-        {
-            instance = new SingletonLazy();
+
+    private SingletonLazy() {
+    }
+
+    /**
+     * public static SingletonLazy getInstance(){
+     * if(instance==null)
+     * {
+     * instance = new SingletonLazy();
+     * }
+     * return instance;
+     * }
+     **/
+
+    public static SingletonLazy getInstance() {
+        if (instance == null) {
+            synchronized (SingletonLazy.class) {
+                if (instance == null) {
+                    instance = new SingletonLazy();
+                }
+            }
         }
         return instance;
     }
-    /**
-     public static SingletonLazy getInstance(){
-     if(instance==null){
-     synchronized(){
-     if(instance==null)
-     {
-     instance = new SingletonHungry();
-     }
-     }
-     }
-     }
-     **/
 }
