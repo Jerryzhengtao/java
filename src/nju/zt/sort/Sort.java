@@ -1,6 +1,8 @@
 package nju.zt.sort;
 
 
+import sun.awt.image.BufImgVolatileSurfaceManager;
+
 /**
  * @ClassName Sort
  * @Description //将多个排序类整合到Sort类中
@@ -153,13 +155,14 @@ public class Sort {
             arr[rightEnd] = temp[rightEnd];
         }
     }
-/**
- * @MethodName quickSort
- * @Description //快速排序
- * @Date 2021/1/23 22:10
- * @Param [arr]
- * @return void
- **/
+
+    /**
+     * @return void
+     * @MethodName quickSort
+     * @Description //快速排序
+     * @Date 2021/1/23 22:10
+     * @Param [arr]
+     **/
     public static <T extends Comparable<? super T>> void quickSort(T[] arr) {
         if (arr.length > 1) {
             quickSort(arr, 0, arr.length - 1);
@@ -194,6 +197,41 @@ public class Sort {
         T tmp = arr[aIndex];
         arr[aIndex] = arr[bIndex];
         arr[bIndex] = tmp;
+    }
+
+    /**
+     * @return void
+     * @MethodName countingSort
+     * @Description //计数排序，只能对整数排序
+     * @Date 2021/1/24 22:49
+     * @Param [arr]
+     **/
+    public static void countingSort(int[] arr) {
+        if (arr.length >= 2) {
+            int min = arr[0];
+            int max = arr[0];
+            for (int i = 0; i < arr.length; i++) {
+                min = Math.min(min, arr[i]);
+                max = Math.max(max, arr[i]);
+            }
+            int center = -min;
+            int[] bucket = new int[max - min + 1];
+            for (int i = 0; i < arr.length; i++) {
+                bucket[arr[i] + center]++;
+            }
+            int index = 0;
+            for (int i = 0; i < bucket.length; i++) {
+                while (bucket[i] != 0) {
+                    arr[index++] = i - center;
+                    bucket[i]--;
+                }
+            }
+        }
+    }
+    public static void swap(int[] arr, int a, int b) {
+        int tmp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = tmp;
     }
 
 }

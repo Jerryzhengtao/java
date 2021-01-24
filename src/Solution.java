@@ -2,44 +2,55 @@ import nju.zt.designpattern.SingletonHungry;
 import nju.zt.designpattern.SingletonLazy;
 import nju.zt.sort.Sort;
 
+import javax.net.ssl.SNIHostName;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class Solution {
 
     public static void main(String[] args) {
-        String[] s = {"ab", "a"};
-
-        Sort.insertionSort(s);
-        for (String ss : s)
-            System.out.println(ss);
-
-
+        Solution solution = new Solution();
+        int[] a = {-1, 0, 1, 2, -1, -4};
     }
 
-    public static String longestCommonPrefix(String[] strs) {
-        if (strs.length == 0) {
-            return "";
-        }
-        for (int i = 0; i < strs.length; i++) {
-            String current = strs[i];
-            int index = i;
-            while (index > 0 && strs[index - 1].compareTo(current) > 0) {
-                strs[index] = strs[index - 1];
-                index--;
+    public int threeSumClosest(int[] nums, int target) {
+        int ans = Integer.MAX_VALUE;
+        Arrays.sort(nums);
+        //枚举第一个数
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue; //确保第一个数不重复
             }
-            strs[index] = current;
-        }
-        String ans = strs[0];
-        for(int i =0;i<ans.length();i++){
-            if(ans.charAt(i)!=strs[strs.length-1].charAt(i)){
-                return ans.substring(0,i);
+            int right = nums.length - 1;
+            int j = i + 1;
+            int k = nums.length - 1;
+            while (j < k) {
+                int a = nums[i] + nums[j] + nums[k];
+                if (a == target) {
+                    return target;
+                }
+                if (Math.abs(target - a) < Math.abs(target - ans)) {
+                    ans = a;
+                }
+                if (a > target) {
+                    int k0 = k - 1;
+                    while (j < k0 && nums[k0] == nums[k]) {
+                        k0--;
+                    }
+                    k = k0;
+                } else {
+                    int j0 = j - 1;
+                    while (j0 < k && nums[j0] == nums[j]) {
+                        j0++;
+                    }
+                    j = j0;
+                }
             }
         }
         return ans;
 
-
-}
-
-
+    }
 }

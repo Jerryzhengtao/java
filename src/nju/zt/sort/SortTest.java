@@ -18,11 +18,10 @@ public class SortTest {
         //Sort.insertionSort(testArray);
         //Sort.shellSort(testArray);
         // Sort.mergeSort(testArray);
-        Sort.quickSort(testArray);
-        for (Integer i : testArray) {
+        Sort.countingSort(testArray1);
+        //Sort.swap(testArray1,0,1);
+        for (Integer i : testArray1) {
             System.out.print(i + " ");
         }
     }
-
-
 }
