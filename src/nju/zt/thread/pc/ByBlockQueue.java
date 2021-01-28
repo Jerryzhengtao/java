@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * @ClassName ByBlockQueue
- * @Description //阻塞队列实现消费者和生产者，执行结果看来，此方法比较公平
+ * @Description //阻塞队列实现消费者和生产者
  * @Author zt
  * @Date 2021/1/11 0:32
  * @Version 1.0

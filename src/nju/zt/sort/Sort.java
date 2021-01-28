@@ -3,6 +3,11 @@ package nju.zt.sort;
 
 import sun.awt.image.BufImgVolatileSurfaceManager;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * @ClassName Sort
  * @Description //将多个排序类整合到Sort类中
@@ -206,7 +211,7 @@ public class Sort {
      * @Date 2021/1/24 22:49
      * @Param [arr]
      **/
-    public static void countingSort(int[] arr) {
+    public static void countingSort(Integer[] arr) {
         if (arr.length >= 2) {
             int min = arr[0];
             int max = arr[0];
@@ -228,10 +233,4 @@ public class Sort {
             }
         }
     }
-    public static void swap(int[] arr, int a, int b) {
-        int tmp = arr[a];
-        arr[a] = arr[b];
-        arr[b] = tmp;
-    }
-
 }

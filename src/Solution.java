@@ -1,56 +1,61 @@
-import nju.zt.designpattern.SingletonHungry;
-import nju.zt.designpattern.SingletonLazy;
-import nju.zt.sort.Sort;
-
-import javax.net.ssl.SNIHostName;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class Solution {
 
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        int[] a = {-1, 0, 1, 2, -1, -4};
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode resList = new ListNode();
+        ListNode pre = resList;
+        int carry = 0;
+        while (true) {
+            if (l1 != null) {
+                carry = carry + l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                carry = carry + l2.val;
+                l2 = l2.next;
+            }
+            pre.val = carry % 10;
+            carry = carry / 10;
+            if (l1 == null && l2 == null) {
+                if (carry != 0) {
+                    pre.next = new ListNode(carry);
+                }
+                return resList;
+            }
+            pre.next = new ListNode();
+            pre = pre.next;
+        }
     }
 
-    public int threeSumClosest(int[] nums, int target) {
-        int ans = Integer.MAX_VALUE;
-        Arrays.sort(nums);
-        //枚举第一个数
-        for (int i = 0; i < nums.length; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) {
-                continue; //确保第一个数不重复
-            }
-            int right = nums.length - 1;
-            int j = i + 1;
-            int k = nums.length - 1;
-            while (j < k) {
-                int a = nums[i] + nums[j] + nums[k];
-                if (a == target) {
-                    return target;
-                }
-                if (Math.abs(target - a) < Math.abs(target - ans)) {
-                    ans = a;
-                }
-                if (a > target) {
-                    int k0 = k - 1;
-                    while (j < k0 && nums[k0] == nums[k]) {
-                        k0--;
-                    }
-                    k = k0;
-                } else {
-                    int j0 = j - 1;
-                    while (j0 < k && nums[j0] == nums[j]) {
-                        j0++;
-                    }
-                    j = j0;
-                }
-            }
-        }
-        return ans;
 
+    public static void main(String[] arg) {
+        ListNode a = new ListNode(9);
+        ListNode b = new ListNode(9);
+        ListNode c = new ListNode(9);
+        ListNode d = new ListNode(9);
+        ListNode e = new ListNode(9);
+        ListNode f = new ListNode(9);
+
+        a.next = b;
+        b.next = c;
+
+        d.next = e;
+        e.next = f;
+
+        addTwoNumbers(a, d);
+    }
+
+
+    static class ListNode {
+        public int val;
+        public ListNode next = null;
+
+        public ListNode() {
+        }
+
+        public ListNode(int val) {
+            this.val = val;
+        }
     }
 }
