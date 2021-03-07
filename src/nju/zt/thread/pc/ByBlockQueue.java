@@ -1,5 +1,7 @@
 package nju.zt.thread.pc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -11,6 +13,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  * @Version 1.0
  **/
 public class ByBlockQueue {
+    public static List<String> lists = new ArrayList<>();
     static class Product {
         private LinkedBlockingDeque<Integer> list = new LinkedBlockingDeque<>(15);
 
@@ -78,12 +81,12 @@ public class ByBlockQueue {
         long end;
         Product product = new Product();
 
-        Producer producer1 = new Producer(product, 3000000);
-        Producer producer2 = new Producer(product, 3000001);
-        Producer producer3 = new Producer(product, 3000000);
-        Consumer consumer1 = new Consumer(product, 3000000);
-        Consumer consumer2 = new Consumer(product, 3000000);
-        Consumer consumer3 = new Consumer(product, 3000000);
+        Producer producer1 = new Producer(product, 30000);
+        Producer producer2 = new Producer(product, 30000);
+        Producer producer3 = new Producer(product, 30000);
+        Consumer consumer1 = new Consumer(product, 30000);
+        Consumer consumer2 = new Consumer(product, 30000);
+        Consumer consumer3 = new Consumer(product, 30000);
 
         Thread t1 = new Thread(producer1);
         Thread t2 = new Thread(producer2);
@@ -112,5 +115,7 @@ public class ByBlockQueue {
             }
         }
         System.out.println(end - start);
+
+        System.gc();
     }
 }

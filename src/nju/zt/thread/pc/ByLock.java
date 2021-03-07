@@ -1,5 +1,7 @@
 package nju.zt.thread.pc;
 
+import java.beans.PropertyDescriptor;
+import java.util.Properties;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
