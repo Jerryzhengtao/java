@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>注册</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body>
+
+<nav class="ui inverted  attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui purple header item">GExcels</h2>
+        </div>
+    </div>
+</nav>
+<!--内容-->
+<div>
+    <br><br><br><br><br><br><br>
+    <div class="ui middle aligned center aligned grid m-padded-tb-login ">
+        <div class="ui stackable column" style="max-width: 30em!important;">
+            <h2 class="ui purple image header">
+                <div class="content">
+                   注册
+                </div>
+            </h2>
+            <form class="ui large form " method="post" th:action="@{/register}">
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="nickname" placeholder="昵称">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="username" placeholder="用户名">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="密码">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="rePassword" placeholder="确认密码">
+                        </div>
+                    </div>
+
+                    <select name="type" class="ui dropdown">
+                        <option value="teacher">我是老师</option>
+                        <option value="student">我是学生</option>
+                    </select>
+                    <br>
+                    <button class="ui fluid large purple submit button">注册</button>
+                    <div class="center aligned">
+                        <br><a href="/" th:href="@{/}">去登陆</a>
+                    </div>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui mini negative message" th:if="${message!=null && message ne 'success' }" th:text="${message}">
+                </div>
+                <div class="ui  message" th:if="${message !=null && message eq 'success'}" th:text="'注册成功!'">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--底部-->
+<footer>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js" type="text/javascript"></script>
+
+<script>
+    $('.ui.form').form({
+        fields: {
+            nickname: {
+                identifier: 'nickname',
+                rules: [{
+                    type: 'empty',
+                    prompt: '昵称不能为空！'
+                }]
+            },
+            username: {
+                identifier: 'username',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请输入用户名!'
+                    }
+                ]
+            },
+            password: {
+                identifier: 'password',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入密码!'
+                }]
+            },
+            rePassword: {
+                identifier: 'rePassword',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入密码!'
+                }]
+            }
+        }
+    })
+</script>
+</body>
+</html>

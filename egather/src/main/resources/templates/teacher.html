@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>主页</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body>
+<nav class="ui inverted  attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui purple header item">GExcels</h2>
+            <a class="right aligned item" href="/logout" th:href="@{/logout}">注销</a>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+<div th:if="${excels!=null}" class="ui grid">
+
+    <div class="two wide column"></div>
+    <table class="ui celled table twelve wide column ">
+        <thead>
+        <tr>
+            <th>文件列表</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>文件名</th>
+            <th>上传者</th>
+            <th>上传时间</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${excels.size() eq 0}">
+            <td class="two wide column"></td>
+            <td class="four wide column" th:text="'你还没有上传任何文件，快去上传吧！'"></td>
+        </tr>
+        <div th:each="excel:${excels}" class="ui padded vertical segment">
+            <tr>
+                <td class="two wide column" th:text="${excelStat.count}"></td>
+                <td class="two wide column" th:text="${excel.name}"></td>
+                <td class="two wide column" th:text="${excel.nickname}"></td>
+                <td class="two wide column" th:text="${excel.time}"></td>
+                <td>
+                    <a href="/download" th:href="@{/download(id=${excel.id})}" class="ui mini teal button">下载</a>
+                    <a href="/delete" th:href="@{/delete(id=${excel.id})}" class="ui mini red button">删除</a>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <th colspan="1">
+                <a href="/savefile" th:href="@{/savefile}" class="ui  left floated teal button">上传文件</a>
+            </th>
+            <th colspan="5">
+                <a href="/merge" th:href="@{/merge}" class="ui  right floated teal button">合并后下载</a>
+            </th>
+        </tr>
+        </tfoot>
+
+    </table>
+    <div class="two wide column"></div>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js" type="text/javascript"></script>
+
+</html>

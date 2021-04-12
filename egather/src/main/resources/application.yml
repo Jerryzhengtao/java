@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/testdatabase?useUnicode=true&characterEncoing=utf-8
+    username: root
+    password: mysql057048
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+savePath: D:\test\
+tmpPath: D:\test\

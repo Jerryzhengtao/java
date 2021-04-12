@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>上传文件</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body>
+<nav class="ui inverted  attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui purple header item">GExcels</h2>
+            <a class="right aligned item" href="/logout" th:href="@{/logout}">注销</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+<div class="ui container">
+    <div class="two wide column"></div>
+    <div>
+        <h4>上传文件</h4>
+        <form class="four wide column teal" method="post" enctype="multipart/form-data" action="/save">
+            <input type="hidden" id="text" name="name">
+            <input class="teal button" type="file" name="file" id="fileField"
+                   onchange="document.getElementById('text').value=this.files[0].name">
+            <input type="submit" class="teal ui mini button" value="上传">
+        </form>
+
+        <br>
+        <br>
+
+        <div>
+            <a href="/back" th:href="@{/back}" class="ui mini button">返回</a>
+        </div>
+
+        <div class="ui negative message" th:if="${session.upMsg!=null && session.upMsg ne '上传成功!'} " th:text="${session.upMsg}"></div>
+        <div class="ui  message" th:if="${session.upMsg!=null&&session.upMsg eq '上传成功!'} " th:text="${session.upMsg}"></div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js" type="text/javascript"></script>
+
+</html>
